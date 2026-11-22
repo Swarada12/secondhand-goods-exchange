@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Second Hand Goods Exchange Platform</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            background-color: #f4f6f5;
+            color: #222;
+        }
+
+        .header {
+            background-color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .header input {
+            padding: 10px;
+            width: 230px;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        .navbar {
+            background-color: #187a3d;
+            padding: 14px 25px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .page {
+            padding: 25px;
+        }
+
+        .card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            padding: 18px;
+            margin: 12px 0;
+            width: 260px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .form-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            padding: 20px;
+            max-width: 400px;
+        }
+
+        .form-box input, .form-box textarea {
+            width: 95%;
+            padding: 10px;
+            margin: 7px 0 15px 0;
+            border: 1px solid gray;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #187a3d;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #105c2d;
+        }
+
+        #loginPage {
+            padding: 25px;
+        }
+
+        #loginBox {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            padding: 25px;
+            width: 280px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        #loginBox input {
+            padding: 9px;
+            width: 90%;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loginPage">
+        <h1>• Second Hand Goods Exchange Platform</h1>
+
+        <div id="loginBox">
+            <h2>Login</h2>
+            <form onsubmit="login(event)">
+                <input type="email" id="email" placeholder="Enter email" required><br>
+                <input type="password" id="password" placeholder="Enter password" required><br><br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="homePage" style="display: none;">
+
+        <div class="header">
+            <h1>• Second Hand Goods Exchange Platform</h1>
+            <input type="text" id="search" placeholder="Search goods..." onkeyup="searchItems()">
+        </div>
+
+        <div class="navbar">
+            <a href="#" onclick="showPage('home')">Home</a>
+            <a href="#" onclick="showPage('orders')">Your Orders</a>
+            <a href="#" onclick="showPage('add')">Add Items</a>
+            <a href="#" onclick="showPage('account')">My Account</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+
+        <div id="homeContent" class="page">
+            <h2>Available Items</h2>
+            <p>Find second-hand goods listed by other users.</p>
+
+            <div id="itemsList">
+                <div class="card item">
+                    <h3>Used Bicycle</h3>
+                    <p>Good condition</p>
+                    <p>Price: Rs. 2,000</p>
+                </div>
+
+                <div class="card item">
+                    <h3>Study Table</h3>
+                    <p>Second hand study table</p>
+                    <p>Price: Rs. 1,500</p>
+                </div>
+
+                <div class="card item">
+                    <h3>Old Books</h3>
+                    <p>Engineering books</p>
+                    <p>Price: Rs. 300</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="addContent" class="page" style="display: none;">
+            <h2>Add Your Item</h2>
+            <p>Enter the details of the item you want to sell.</p>
+
+            <div class="form-box">
+                <form onsubmit="addItem(event)">
+                    <label>Item Name:</label><br>
+                    <input type="text" id="itemName" placeholder="Enter item name" required>
+
+                    <label>Description:</label><br>
+                    <textarea id="itemDescription" rows="3" placeholder="Enter item description" required></textarea>
+
+                    <label>Price (Rs.):</label><br>
+                    <input type="number" id="itemPrice" placeholder="Enter price" min="1" required>
+
+                    <button type="submit">Add Item</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="accountContent" class="page" style="display: none;">
+            <h2>My Account</h2>
+
+            <div class="form-box">
+                <p>Profile Name:</p>
+                <input type="text" id="profileName" value="User">
+                <button onclick="changeName()">Save Name</button>
+                <p id="nameMessage"></p>
+            </div>
+        </div>
+
+        <div id="ordersContent" class="page" style="display: none;">
+            <h2>Your Orders</h2>
+            <p>You have no orders yet.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Hardcoded login details and profile name
+        var correctEmail = "user@gmail.com";
+        var correctPassword = "12345";
+        var userName = "User";
+
+        //login function
+        function login(event) {
+            event.preventDefault();
+
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            if (email == correctEmail && password == correctPassword) {
+                document.getElementById("loginPage").style.display = "none";
+                document.getElementById("homePage").style.display = "block";
+            } else {
+                alert("Wrong email or password");
+            }
+        }
+
+
+        function showPage(pageName) {
+            document.getElementById("homeContent").style.display = "none";
+            document.getElementById("addContent").style.display = "none";
+            document.getElementById("accountContent").style.display = "none";
+            document.getElementById("ordersContent").style.display = "none";
+
+            document.getElementById("search").value = "";
+
+            if (pageName == "home") {
+                document.getElementById("homeContent").style.display = "block";
+                searchItems();
+            } else if (pageName == "add") {
+                document.getElementById("addContent").style.display = "block";
+            } else if (pageName == "account") {
+                document.getElementById("accountContent").style.display = "block";
+                document.getElementById("profileName").value = userName;
+            } else if (pageName == "orders") {
+                document.getElementById("ordersContent").style.display = "block";
+            }
+        }
+        //itmems add.
+
+        function addItem(event) {
+            event.preventDefault();
+
+            var name = document.getElementById("itemName").value;
+            var description = document.getElementById("itemDescription").value;
+            var price = document.getElementById("itemPrice").value;
+
+            var newItem = document.createElement("div");
+            newItem.className = "card item";
+
+            newItem.innerHTML = "<h3>" + name + "</h3>" +
+                "<p>" + description + "</p>" +
+                "<p>Price: Rs. " + price + "</p>";
+
+            document.getElementById("itemsList").appendChild(newItem);
+
+            document.getElementById("itemName").value = "";
+            document.getElementById("itemDescription").value = "";
+            document.getElementById("itemPrice").value = "";
+
+            alert("Your item has been added!");
+            showPage("home");
+        }
+   
+        //searching items
+        function searchItems() {
+            var searchText = document.getElementById("search").value.toLowerCase();
+            var items = document.getElementsByClassName("item");
+
+            for (var i = 0; i < items.length; i++) {
+                var itemName = items[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
+
+                if (itemName.includes(searchText)) {
+                    items[i].style.display = "inline-block";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+
+        //name changing function
+
+        function changeName() {
+            var newName = document.getElementById("profileName").value;
+
+            if (newName.trim() != "") {
+                userName = newName;
+                document.getElementById("nameMessage").innerText = "Profile name changed to " + userName;
+            } else {
+                alert("Please enter a name");
+            }
+        }
+
+        //logot function
+
+        function logout() {
+            document.getElementById("homePage").style.display = "none";
+            document.getElementById("loginPage").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
