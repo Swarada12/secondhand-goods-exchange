@@ -4,27 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
+    <meta name="description" content="Exchange your used Items with people nearby you.">
 
     <title>Second Hand Goods Exchange Platform</title>
+    <style>
+        .navbar {
+            background-color: rgb(12, 175, 61);
+            color: white;
+            gap: 20px;
+            display: flex;
+        }
+
+        .copy {
+            text-align: center;
+            background-color: black;
+            color: grey;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-weight: 300;
+        }
+
+        i {
+            text-align: center;
+        }
+
+        #search  {
+            width: 15%;
+            padding: 10px 15px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid rgb(12, 175, 61);
+            border-radius: 4px;
+
+        }
+    </style>
 </head>
 
 <body>
     <header>
+
         <i>Exhange your used Items Securely</i>
+
         <h1>Second Hand Goods Exchange Platform</h1>
-        <input placeholder=" &#128269; Search any Item">
+        <input id="search" placeholder=" &#128269; Search any Item">
         <div>
 
-            <nav>
+            <nav class="navbar">
 
-                <a href="">Home</a> |
-                <a href="">Contact Us</a> |
+                <a href="home.html">Home </a>
+                <a href="contact.html" target="_blank">Contact Us </a>
                 <!-- we should have different place for login and signup options  -->
-                <a href="">Log in</a> |
-                <a href="">Sign Up</a> |
-                <a href="">Add Item</a> |
+                <a href="login.html" >Log in </a>
+                <a href="signup.html">Sign Up </a>
+                <a href="additem.html" >Add Item </a>
                 <a href=""></a>
-                <a href="">History</a> |
+                <a href="history.html">History </a>
 
 
             </nav>
@@ -38,12 +76,10 @@
         </div>
     </main>
     <footer>
-        <pre>
-                                                                                        About Us <br>
-    
-
-                                                                             Copyright &copy; All Rights Reserved
+        <p class="copy">
+            About Us <br>
+            Copyright &copy; All Rights Reserved</p>
     </footer>
 </body>
-
+<!-- UPDATE HOME CODE!! -->
 </html>
